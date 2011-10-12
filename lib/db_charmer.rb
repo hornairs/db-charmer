@@ -241,3 +241,8 @@ class ActiveRecord::Base
     alias_method_chain :inherited, :hijacking
   end
 end
+
+# Add gem tasks to Rails app
+if DbCharmer.rails3?
+  require 'db_charmer/railtie.rb'
+end
