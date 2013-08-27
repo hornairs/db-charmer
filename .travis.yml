@@ -13,10 +13,6 @@ env:
   # Temporary disabled gem testing until our gem with multi-threading support is released
   # - RAILS_VERSION=3.2.13 DB_CHARMER_GEM=1.9.0
 
-notifications:
-  recipients:
-    - alexey@kovyrin.net
-
 script: ./ci_build
 
 # Whitelist branches to test
