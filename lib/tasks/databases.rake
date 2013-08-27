@@ -23,7 +23,7 @@ namespace :db_charmer do
 
   desc 'Create the databases defined in config/database.yml for the current RAILS_ENV'
   task :create => "db:load_config" do
-    create_core_and_sub_database(ActiveRecord::Base.configurations[RAILS_ENV])
+    create_core_and_sub_database(ActiveRecord::Base.configurations[Rails.env])
   end
 
   def create_core_and_sub_database(config)
@@ -49,7 +49,7 @@ namespace :db_charmer do
 
   desc 'Drops the database for the current RAILS_ENV'
   task :drop => "db:load_config" do
-    config = ::ActiveRecord::Base.configurations[RAILS_ENV || 'development']
+    config = ::ActiveRecord::Base.configurations[Rails.env || 'development']
     begin
       drop_core_and_sub_database(config)
     rescue Exception => e

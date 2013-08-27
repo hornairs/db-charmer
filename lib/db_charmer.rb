@@ -206,3 +206,22 @@ else
   # Open up really useful API method
   ActiveRecord::AssociationPreload::ClassMethods.send(:public, :preload_associations)
 end
+
+#---------------------------------------------------------------------------------------------------
+# Hijack connection on all new AR classes when we're in a block with main AR connection remapped
+class ActiveRecord::Base
+  class << self
+    def inherited_with_hijacking(subclass)
+      out = inherited_without_hijacking(subclass)
+      hijack_connection! if DbCharmer.hijack_new_classes?
+      out
+    end
+
+    alias_method_chain :inherited, :hijacking
+  end
+end
+
+# Add gem tasks to Rails app
+if DbCharmer.rails3?
+  require 'db_charmer/railtie.rb'
+end
